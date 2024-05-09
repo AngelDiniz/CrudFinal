@@ -31,7 +31,7 @@ public class Bebida {
         return preco;
     }
 
-    public void setPreço(float preco) {
+    public void setPreco(float preco) {
         this.preco = preco;
     }
 }

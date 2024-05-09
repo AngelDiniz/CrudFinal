@@ -37,24 +37,26 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.OK).body(cliente.get());
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente clienteDb ) {
-        Optional<Cliente> clieteDb = clienteRepository.findById(id);
-        if (clieteDb.isEmpty()) {
-            throw new RuntimeException("Cliente não encontrada");
+    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente novoCliente) {
+        Optional<Cliente> optionalCliente = clienteRepository.findById(id);
+        if (optionalCliente.isEmpty()) {
+            throw new RuntimeException("Cliente não encontrado");
         }
-        clieteDb.get().setNome(clienteDb.getNome());
+        Cliente cliente = optionalCliente.get();
+        cliente.setNome(novoCliente.getNome());
+        // Atualizar outros atributos conforme necessário
 
-
-        clienteRepository.save(clienteDb.get());
-        return ResponseEntity.status(HttpStatus.OK).body(clienteDb.get());
+        clienteRepository.save(cliente);
+        return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletarPizza(@PathVariable Long id){
-        Optional<Cliente> cliente = clienteRepository.findById(id);
-        if (cliente.isEmpty()){
-            throw new RuntimeException("Pizza não encontrada");
+    public ResponseEntity<String> deletarCliente(@PathVariable Long id){
+        Optional<Cliente> optionalCliente = clienteRepository.findById(id);
+        if (optionalCliente.isEmpty()){
+            throw new RuntimeException("Cliente não encontrado");
         }
-        clienteRepository.delete(cliente.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Pizza deletada com sucesso");
+        clienteRepository.delete(optionalCliente.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Cliente deletado com sucesso");
     }
 }

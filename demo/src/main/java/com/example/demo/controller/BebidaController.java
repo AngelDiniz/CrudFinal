@@ -38,25 +38,27 @@ public class BebidaController {
         return ResponseEntity.status(HttpStatus.OK).body(bebida.get());
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Bebida> atualizarBebida (@PathVariable Long id, @RequestBody Bebida bebida) {
-        Optional<Bebida> bebidaa = bebidaRepository.findById(id);
-        if (bebidaa.isEmpty()) {
+    public ResponseEntity<Bebida> atualizarBebida (@PathVariable Long id, @RequestBody Bebida novaBebida) {
+        Optional<Bebida> optionalBebida = bebidaRepository.findById(id);
+        if (optionalBebida.isEmpty()) {
             throw new RuntimeException("Bebida não encontrada");
         }
-        bebidaa.get().setNome(bebida.getNome());
+        Bebida bebida = optionalBebida.get();
+        bebida.setNome(novaBebida.getNome());
+        // Atualizar outros atributos conforme necessário
 
-
-        bebidaRepository.save(bebida.get());
-        return ResponseEntity.status(HttpStatus.OK).body(bebida.get());
+        bebidaRepository.save(bebida);
+        return ResponseEntity.status(HttpStatus.OK).body(bebida);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletarBebida(@PathVariable Long id){
-        Optional<Bebida> bebida = bebidaRepository.findById(id);
-        if (bebida.isEmpty()){
+        Optional<Bebida> optionalBebida = bebidaRepository.findById(id);
+        if (optionalBebida.isEmpty()){
             throw new RuntimeException("Bebida não encontrada");
         }
-        bebidaRepository.delete(bebida.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Pizza deletada com sucesso");
+        bebidaRepository.delete(optionalBebida.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Bebida deletada com sucesso");
     }
 
 }
