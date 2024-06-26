@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.models.Cliente;
 import com.example.demo.models.Pizza;
 import com.example.demo.repositories.ClienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+
 @RequestMapping("/clientes")
 public class ClienteController {
+    @Autowired
     private ClienteRepository clienteRepository;
 
     @PostMapping

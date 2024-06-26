@@ -29,7 +29,7 @@ public class BebidaController {
         return ResponseEntity.status(HttpStatus.OK).body(bebidas);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/bebidas/{id}")
     public ResponseEntity<Bebida> mostrarBebidasPorId(@PathVariable Long id ){
         Optional<Bebida> bebida = bebidaRepository.findById(id);
         if (bebida.isEmpty()){
@@ -37,7 +37,7 @@ public class BebidaController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(bebida.get());
     }
-    @PutMapping("/{id}")
+    @PutMapping("/bebidas/{id}")
     public ResponseEntity<Bebida> atualizarBebida (@PathVariable Long id, @RequestBody Bebida novaBebida) {
         Optional<Bebida> optionalBebida = bebidaRepository.findById(id);
         if (optionalBebida.isEmpty()) {
@@ -51,7 +51,7 @@ public class BebidaController {
         return ResponseEntity.status(HttpStatus.OK).body(bebida);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/bebidas/{id}")
     public ResponseEntity<String> deletarBebida(@PathVariable Long id){
         Optional<Bebida> optionalBebida = bebidaRepository.findById(id);
         if (optionalBebida.isEmpty()){
